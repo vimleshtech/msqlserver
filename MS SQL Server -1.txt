@@ -1,0 +1,102 @@
+ETL(extract transformation Load) and DB(data base)
+===============================================
+
+RDBMS : relational database management System
+There are following products:
+	-> MS SQL Server 
+	-> Oracle 
+	-> My SQL Server
+	-> IBM DB2
+	-> MongoDB (nosql)
+	etc.
+
+MS SQL Server 
+================
+SQL : structural query language
+
+
+MS SQL Server Environment/Server Edition 
+==========================================
+->MS SQL Server Enterprise
+->MS SQL Server Standard
+->MS SQL Server Express (FREE)
+etc.
+
+
+Client Tools:
+====================
+-> SSMS** (sql server management studio)
+	-> SQL Server Instance
+-> BIDS (business int. development  studio) / Data Tools
+	-> SSIS
+	-> SSAS
+	-> SSRS 
+
+
+Connect to SQL Database Engine : Parameters
+=================================
+1. Server Type:
+		- Database engine  **
+		- Repoting Services
+		- Analysis Services
+		- Integration Services 
+2. Server	: 
+		computername(ip address)/instance
+
+3. Authentication:
+		i. Windows		: no user id, and passsword required to enter
+		ii. SQL  (server account): enter user id , password
+
+		
+
+
+Database : is schema (group of objects and predefind structure) and collection of data in relational format 
+=================
+
+database data file type:
+	-> .mdf : main database 
+	-> .ldf : log data file 
+
+
+SQL Command Type
+====================
+DDL	: Data definition language
+	-create		: create new objects(table, function, proc, trigger etc.)
+	-alter		: modify in existing structure 	
+	-drop		: remove data with structure(objects) 
+	-truncate	: remove all rows , however structure will remain same	
+DML	: data manipulation language
+	-insert		: save data in to table 
+	-update		: modify existing data / change value 
+	-delete		: remove rows/records 
+
+DCL	: data/decision control language
+	-create user 
+	-grant access
+	-revoke access
+TCL	: transaction control language
+	-begin transaction
+	-commit
+	-rollback
+DQL 	: data query language 
+	-select 		:  query over the table/ view data 
+	
+
+
+
+
+
+
+
+
+
+
+
+		
+	
+	
+
+	
+ 
+
+	
