@@ -1,0 +1,475 @@
+/*
+->where   : to filter the rows 
+->operator :
+->order by 
+->group by
+->having
+->aggregiate functions
+
+->case 
+->functions
+->nested query/ subquery
+->keywords : distinct, top etc.
+
+
+
+->operator 
+==================
+Arithmetic:
+	+
+	-
+	*
+	/
+	%	
+Conditinonal:
+	>
+	>=
+	<
+	<=
+	=
+	!=  (str) or    <>  (num)
+
+	keywords:
+	
+	in 
+	not in
+	between
+	no between
+	is null
+	is not null
+
+	wild card:  _ , %
+	
+	like 
+	not like 		
+Logical:
+	and		: if both are matched then true otherwise false 
+	or		: if both are not matched then false otherwise true 
+*/
+use [SuperMarket]
+
+select * from cust 
+
+select * from cust 
+where cid > 5
+
+select * from cust 
+where cid >= 5
+
+select * from cust 
+where cid < 5
+
+select * from cust 
+where cid <= 5
+
+
+select * from cust 
+where cid = 11
+
+select * from cust 
+where cid <> 11
+
+select * from cust 
+where cid != 11
+
+
+select * from cust 
+where cid IN (1,11,33,44,55)
+
+
+select * from cust 
+where cid NOT IN (1,11,33,44,55)
+
+
+select * from cust 
+where cid BETWEEN 1 AND 100 -- INCLUSIVE 
+
+
+select * from cust 
+where cid >= 1 AND CID <=100
+
+select * from cust 
+where cid NOT BETWEEN 1 AND 100 -- INCLUSIVE 
+
+select * from cust 
+where cid IS NOT NULL
+
+select * from cust 
+where cid IS NULL 
+--------
+select * from cust 
+where cid = NULL	-- USER DEFINED NULL 
+
+select * from cust 
+where cid IS NULL		-- SYSTEM DEFIND NULL AND USER DEFINED NULL
+
+
+--------------
+--PATTERN MATCH
+---------------
+select * from cust 
+where CNAME LIKE 'A%'	--START WITH A  
+
+select * from cust 
+where CNAME LIKE '%A'	--END WITH A  
+
+select * from cust 
+where CNAME LIKE '%A%'	--CONTAINS A
+
+select * from cust 
+where CNAME LIKE '%bacd%@gmail.clom'	--CONTAINS bacd and end with @gmail.com
+
+
+select * from cust 
+where CNAME LIKE 'a____' -- start with a and any four chars after a 
+
+select * from cust 
+where CNAME LIKE 'a____d%@yahoo.com' 
+
+
+select * from cust 
+where  CNAME  not LIKE 'a____d%@yahoo.com' 
+
+--and , or
+select * from cust 
+where  CNAME  LIKE 'a%' or cname  LIKE '%a'
+
+
+select * from cust 
+where  CNAME  LIKE 'a%' and  cname  LIKE '%a'
+
+
+select * from cust 
+where cid > 10 and   CNAME  LIKE 'a%' and  cname  LIKE '%a'
+
+--first bracket wil be resolved
+select * from cust 
+where cid > 10 and   (CNAME  LIKE 'a%' or   cname  LIKE '%a')
+
+
+---- ->order by  : to arrange data in ascending or deceding order / sorting
+select * from cust 
+order by cid desc 
+
+select * from cust 
+order by cid  --default is asc
+
+select * from cust 
+order by 1   -- by first column  (cid)
+
+
+select * from cust 
+order by 2 desc   -- by 2nd  column  (cname)
+
+select * from cust 
+order by 3   --will now work 
+
+select cid from cust 
+order by cname    
+
+-- note : 
+select * from cust 
+order by cname  , cid desc
+  
+
+---------------
+--->group by : summarize dat 
+----------------
+select cname  , count(*)
+from cust 
+group by cname
+
+
+--group by only works with aggregiate function 
+select cname  , count(*), sum(cid ), max(cid), min(cid), avg(cid)
+from cust 
+group by cname
+
+
+select cname  , count(*), sum(cid ), max(cid), min(cid), avg(cid)
+from cust 
+group by cname, cid 
+order by cname 
+
+--->aggregiate functions
+count()
+sum()
+max()
+min()
+avg()
+stdiv()
+
+
+-- haging : can be used only with group by
+
+select cname  , count(*) as count_no, sum(cid ), max(cid), min(cid), avg(cid)
+from cust 
+group by cname
+having count(*) > 2
+
+
+--from 
+--where 
+--group by
+--having 
+--order by 
+
+----case  when : is like if condition 
+--================
+
+select 
+	cid,
+	case when cid> 100 
+		 then 
+				'newer'
+		else 
+			
+				'older'
+		end 
+		,cname 
+
+from cust 
+
+
+--nested case 
+select 
+	cid,
+	case when cid > 300
+		 then 
+				'newer'
+		else case when cid between 100 and 300 
+				then
+				'mid'
+
+				else 
+					'older'
+
+			end 
+		end  as newcol
+		,cname 
+		
+
+from cust 
+
+--functions
+--date 
+select getdate()
+select datepart(yyyy, getdate())
+select datepart(MONTH, getdate())
+select datepart(DAY, getdate())
+select datepart(WEEKDAY, getdate())
+select datepart(QUARTER, getdate())
+select datepart(DAYOFYEAR, getdate())
+select datepart(MINUTE, getdate())
+
+
+select datepart(yyyy, getdate()), datepart(HOUR, getdate())
+select datepart(yyyy, getdate()), CONVERT(time,getdate())
+
+
+--- add date 
+select dateadd(YYyy,2, getdate())
+
+select DATEPART(weekday, dateadd(YYyy,10, getdate()))
+select DATEPART(weekday, dateadd(YYyy,-10, getdate()))
+
+
+--diff between two days
+select DATEDIFF(yyyy,'1990-10-23',getdate())
+select DATEDIFF(MONTH,'1990-10-23',getdate())
+select DATEDIFF(HOUR,'1990-10-23',getdate())
+
+
+select cid,cname, gender, DATEDIFF(HOUR,dob,getdate()) from cust 
+
+
+--string / text function 
+select cid,cname , upper(cname) from cust 
+select cid,cname , lower(cname) from cust 
+select cid,cname , len(cname) from cust  --including space
+select cid,cname , replace(cname,'a','xy') from cust 
+select cid,cname , upper(cname) from cust 
+select cid,cname , left(cname,2) from cust 
+select cid,cname , right(cname,3) from cust 
+select cid,cname , ltrim(cname) from cust   -- remove space from left
+select cid,cname , rtrim(cname) from cust -- remove space from right 
+
+
+select cid,cname , CONCAT('mr ',cname) from cust 
+select cid,cname , 'mr '+ cname from cust 
+select cid,cname , null + cname from cust 
+select cid,cname , concat(null , cname) from cust 
+
+select cid,cname , isnull(null,'') + cname from cust 
+select cid,cname ,fname+' ' +isnull(lname,'') from cust 
+
+select cid,cname , SUBSTRING(cname,2,4) from cust  --colname, start position, no. of char/lenght 
+
+
+-- maths
+select max(cid) from cust 
+select min(cid) from cust 
+select sum(cid) from cust 
+select count(cid) from cust 
+select avg(cid) from cust 
+select cid,cname, round(cid,2) from cust 
+
+select cid,cname, POWER(cid,2) from cust 
+select cid,cname, sqrt(cid) from cust 
+
+
+-- convert or misle.
+select convert(varchar, cid) +'-'+cname from cust 
+select cast(cid as varchar) +'-'+cname from cust 
+
+
+-- convert 
+select convert(date,getdate())
+select convert(time,getdate())
+select convert(varchar,getdate(),101)
+select convert(varchar,getdate(),102)
+select convert(varchar,getdate(),103)
+select convert(varchar,getdate(),104)
+select convert(varchar,getdate(),105)
+select convert(varchar,getdate(),106)
+select convert(varchar,getdate(),107)
+select convert(varchar,getdate(),101)
+select convert(varchar,getdate(),112)
+
+
+
+
+update cust
+set cname ='raman sinha'
+where cid  = 11
+
+
+alter table cust
+add dob datetime
+
+update cust
+set dob  ='1990-11-23'
+where cid in (1,11,324)
+
+
+update cust
+set dob  ='1995-12-26'
+where cid not in (1,11,324)
+
+--->nested query/ subquery
+===========================
+
+select 
+	cid ,
+	cname ,
+	dob ,
+	CASE WHEN DATEPART(weekday,dob)  BETWEEN 2 AND 6 
+			THEN 
+				'WEEKDAY'
+			ELSE 
+				'WEEKEND'
+			END 
+
+from cust 
+
+select 
+	cid ,
+	cname ,
+	dob ,
+	(select dname from days_name where did = 	DATEPART(weekday,dob)  ) as day_name 
+
+from cust 
+
+
+
+
+create table days_name 
+(
+did int,
+dname varchar(10)
+)
+
+insert into days_name 
+values(1,'sun'),
+(2,'mon'),
+(3,'tue'),
+(4,'wed'),
+(5,'thu'),
+(6,'fir'),
+(7,'sat')
+
+(1,'sun')
+
+
+
+----keywords : distinct, top etc.
+=================================
+--distinct unique rows
+select distinct * from cust 
+
+select distinct cname  from cust 
+
+--top  : return top given rows
+select top 1 * from cust 
+select top 10 * from cust 
+
+select top 1 * from cust 
+order by cid desc
+
+select top 4 * from cust 
+order by cid desc
+
+
+--return 3nd highest cid 
+
+select top 1 * from
+					(
+						select top 3 * from cust 
+						order by cid desc 
+					) t 
+order by cid asc 
+
+-- return 2nd lowest
+select top 1 * from
+					(
+						select top 2 * from cust 
+						order by cid asc
+					) t 
+order by cid desc
+
+/**
+q.
+eid ename dob
+
+
+--
+output:
+-show  list of user whose b'day is today
+-show list of users whose b'day will come next 5 days
+-show age of users
+
+
+q. subqury
+product
+pid pname  pprice sprice  
+1  dove    40     50
+
+
+
+transaction 
+tid  pid   ttype   quantity date
+1    1     p        100      ...
+2    1     s        3      ...
+3    1     p        300      ...
+
+
+
+output:
+pid  pname   total_purchase  total_sal   balance_stock 
+ 
+
+
+1    1     p        100      ...
+
+
+**/
