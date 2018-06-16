@@ -1,0 +1,27 @@
+
+
+create database test_con
+
+use test_con
+
+select * from users
+
+create table users
+(
+uid int identity(1,1),
+name varchar(100),
+pwd  varchar(20)
+)
+
+
+create proc save_data
+(
+@name varchar(100),
+@pwd varchar(10)
+)
+as
+begin
+	insert into users
+	values(@name,@pwd)
+end
+
