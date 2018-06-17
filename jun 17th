@@ -1,0 +1,206 @@
+/*
+union     : to merge two more than two tables (vertically)
+		  : list of columns must be same 
+		  : data type should be same 
+		  : There are following types o union 
+			i. union		: return unique / distinct rows
+			ii. union all	: return all rows/records				
+-------------------------------
+
+join	: to merge two more than two tables (horizentally)
+		: at one column must be same (logically) in all sources 
+		: There are following types of join :
+			i. inner join  / equi join / default join	: return common/matching rows
+			ii. outer join  / full outer join			 : return all rows from all tables
+				a. left join  / left outer join			: retrun common/matching rows and rest rows from left table
+				b. right join / right outer join		: retrun common/matching rows and rest rows from right table
+			iii. Other types of join
+				a. cross join	/ cartisan product 
+				b. self join	/ reference of same table more than once in query 
+
+
+
+-----------------------
+more about functions
+more about subquery
+
+*/
+
+
+update employee
+set eid  =103, name ='monika sharma'
+where eid  =3
+
+update employee
+set time_stamp =getdate()
+
+
+
+alter table employee
+add time_stamp datetime default getdate()
+
+
+select * from employee
+select * from employe_old 
+
+select * from employee
+union 
+select * from employe_old 
+
+
+select eid,name,gender from employee
+union 
+select eid,name,gender from employe_old 
+
+
+select eid as employeeid,name,gender,time_stamp  from employee
+union 
+select *,'1990-01-01' from employe_old 
+union 
+select *,'1990-01-01' from employe_old 
+union 
+select *,'1990-01-01' from employe_old 
+union 
+select *,'1990-01-01' from employe_old 
+union 
+select *,'1990-01-01' from employe_old 
+union 
+select *,'1990-01-01' from employe_old 
+union 
+select *,'1990-01-01' from employe_old 
+
+
+
+select * from employee
+union  all
+select * from employe_old 
+
+
+select * from employee
+union  all
+select * from HDFC_DEV..employe_old 
+
+insert into employee(eid,name,gender)
+select 11,'jkahjhs','m'
+union select 22,'sjsghs','f'
+union select 33,'shsh','f'
+union select 44,'sjgsh','m'
+
+select * from employee
+select * from sal 
+
+
+--- inner join 
+select *
+from employee inner join sal 
+	on employee.eid = sal.employee
+
+--with alias 
+select e.eid,e.name,e.gender,s.hra,s.basic
+from employee as  e inner join sal s 
+	on e.eid = s.employee
+
+--
+select e.eid,e.name,e.gender,s.hra,s.basic
+from employe_old  as  e join sal s 
+	on e.eid = s.employee
+
+
+
+-- outer join 
+select e.eid,e.name,e.gender,s.hra,s.basic
+from employe_old  as  e  full outer join sal s 
+	on e.eid = s.employee
+
+select * from employe_old  
+select * from sal 
+insert into sal
+values(10,4444,5555)
+
+
+---left join
+select e.eid,e.name,e.gender,s.hra,s.basic
+from employe_old  as  e  left join sal s 
+	on e.eid = s.employee
+
+
+---right join
+select e.eid,e.name,e.gender,s.hra,s.basic
+from employe_old  as  e  right join sal s 
+	on e.eid = s.employee
+
+
+---
+create table country
+(
+cid int,
+cname varchar(100)
+)
+
+select * from country
+select * from employe_old
+
+alter table employe_old
+add cid int 
+
+update employe_old
+set cid = 2
+where eid = 4 or eid  = 5
+
+
+insert into country(cid,cname)
+values(2,'uk')
+
+--three tables join 
+
+select e.eid,e.name,e.gender,s.hra,s.basic,c.cname 
+from employe_old  as  e  inner join  sal s 
+		on e.eid = s.employee
+	inner join country as c
+		on e.cid = c.cid 
+
+
+
+select e.eid,e.name,e.gender,s.hra,s.basic,c.cname 
+from employe_old  as  e  inner join  sal s 
+		on e.eid = s.employee
+	inner join country as c
+		on e.cid = c.cid 
+where s.basic > 	74444
+
+
+select e.eid,e.name,e.gender,s.hra,s.basic,c.cname 
+from employe_old  as  e  inner join  sal s 
+		on e.eid = s.employee
+		   and s.basic > 	74444		   
+	inner join country as c
+		on e.cid = c.cid 
+	
+--a. cross join	/ cartisan product 
+-----------------------------------------
+select *
+from employe_old as  e , sal as s
+
+
+select *
+from employe_old as  e , sal as s
+where e.eid = s.employee
+
+
+
+select * from employe_old
+select  * from sal 
+
+--b. self join	/ reference of same table more than once in query 
+eid  ename  mgrid
+1     raman  null
+2     chahat  1
+3     monika  2
+
+
+
+
+--out
+eid ename   mgrid mgrname 
+
+
