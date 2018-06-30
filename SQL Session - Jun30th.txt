@@ -1,0 +1,124 @@
+MS SQL Server Type
+========================
+1.Database Engine
+
+MS BI
+-----------
+2.Integration Services (SSIS)
+3.Reporting Services (SSRS)
+4.Analysis Services (SSAS)
+
+
+
+1.Database Engine
+================================
+Client - Server Architecture
+---------------------------------
+Client:
+	-SQL Server Management Studio  (SSMS)
+Server:
+	-SQL Express		: free
+	-Standand Edition	: paid**
+	-Enterprise Edition 	: paid**
+	-Developer Edition
+	-Evalution Edition	: free/trial
+
+MS SQL Serve - Version 
+--------------------------------------
+MS SQL Server 2000
+MS SQL Server 2005
+MS SQL Server 2008
+MS SQL Server 2008 R2	*
+MS SQL Server 2012	**
+MS SQL Server 2014	**	
+MS SQL Server 2016
+MS SQL Server 2017
+
+
+Connect SQL Server from SSMS
+----------------------------
+1. Choose Server Type	: Database Engine
+2. Enter server name
+3. Choose Authentication Type
+	i. Windows Authentication (no user id, and password required)
+	ii. SQL Server(SA)
+		user id and password will be required
+
+4. then click on connect
+
+
+Databases:
+----------------------------
+
+-System Defiend database
+	1. master	: is contains meta information/details about server , 					authenitcation , user defined databases e.tc
+	2. tempdb	: global temp. memory for all databases 
+	3. model	: it contains model diagram or entity relationship
+	4. msdb		: contains details about server 
+
+-Database(user defined database): is relatioal schema where data can stored in 		tablular struction. And it's a collection of different object:
+	
+	-hrms(it's user defined name)
+		-tables
+		-views
+		-programbility
+			-functions
+			-stored procedure 
+			etc.
+
+		-security
+
+	
+
+SQL Command Type
+----------------------------
+1. DDL (data definition laguage)
+	-create
+	-alter
+	-drop
+	-truncate
+2. DML	(data manipulation laguage)
+	-insert
+	-udpate
+	-delete
+3. DCL	(data control language)
+	-create user
+	-grant access
+	-revoke access
+4. TCL	(transcation control language)
+	-begin transaction 
+	-commit
+	-rollback
+5. DQL	(data query langauge)
+	-select
+
+
+--create user defined database 
+create database hrms;
+
+
+Database file type:
+-----------------------
+1. .mdf   : main data file
+2. .ldf   : log data file 
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+	
+
+
+
