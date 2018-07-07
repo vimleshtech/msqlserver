@@ -1,0 +1,241 @@
+
+
+select * from [dbo].[emp]
+select * from [dbo].[employee]
+
+select * from [dbo].[testLog]
+
+alter table emp 
+add country varchar(100)
+
+alter table emp 
+drop column country 
+
+select * From v_emps4
+
+insert into v_emps4(name) values('aaaa')
+	
+
+alter view v_emps4
+as
+	select * from emp  e inner join [testLog] t
+		on e.eid =  t.RowNumber
+	
+
+
+
+
+
+alter view v_emps
+as
+	select top 1 eid as employee_id, name as employee_name from emp 
+	order by eid 
+
+
+
+select * from v_emps
+
+insert into v_emps(employee_name) values('chahat')
+
+alter view v_emps1
+as
+	select eid as employee_id, name as employee_name from emp 
+	where eid > 12;	
+
+
+create view v_emps2
+as
+	select eid as employee_id, name as employee_name from emp 	
+	union all 
+	select eid as employee_id, name as employee_name from emp 
+	where eid > 12;
+
+
+select * from v_emps2
+
+
+--------------------------------------------- 
+--variable 
+declare @n1 as int
+declare @n varchar(100) = 'nitin'
+
+set @n = 100
+print @n 
+select @n = 1122
+print  @n 
+
+
+-- 
+declare @n1 int
+	   ,@n2 int
+
+set @n1 =11
+set @n2 =434
+
+if @n1>@n2 
+begin
+	select ' n1 is gt'
+end
+else
+begin
+	select ' n2 is gt'
+end
+
+
+
+
+---- LOOP : is iterator to repeat the set of instructions or commands
+declare @i int  =1 --init 
+while @i<10  --condition 
+begin
+
+	print @i 
+	set @i =@i+1 --increment
+end
+
+
+--print in reverse 
+declare @i int  =10 --init 
+while @i>0  --condition 
+begin
+
+	print @i 
+	set @i =@i-1 --decrement
+end
+
+
+-----
+declare @i int  =1 --init 
+while @i<40  --condition 
+begin
+
+	print @i 
+	set @i =@i+2 
+end
+
+--wap to get sum of all even and odd numbers  between 1 to 100
+declare @i int  =1 --init 
+		,@se  int = 0
+		,@so  int = 0
+
+while @i<=100  --condition 
+begin
+
+	if @i % 2 =0     --if even 
+	begin 
+		set @se = @se + @i 
+	end
+	else
+	begin
+		set @so = @so + @i 
+	end
+	 
+	set @i =@i+1 
+end
+
+select @se ,@so
+ 
+
+--------
+
+declare @i int =1
+
+while @i <100
+begin
+	if @i % 3 =0 and @i % 5= 0 
+	begin 
+			print 'xy'
+	end 
+	else if @i % 3 =0
+	begin 
+		print 'x'
+	end
+	else if @i % 5 =0
+	begin 
+		print 'y'
+	end 
+	else
+	begin
+			print @i 
+	end	
+	
+	set @i =@i+1
+end 
+
+
+------------------------
+
+
+alter proc tbl_action
+(
+@name varchar(10),
+@action char(3) = 'I'  --default value 
+)
+as
+begin 
+
+		if @action ='i'
+		begin
+				insert into emp(name) values(@name)		
+		end 
+		else if @action ='d'
+		begin 
+			delete from emp where name = @name
+		end
+		else
+		begin 
+				select 'condition not match'
+		end	
+end
+
+
+
+
+		
+
+--
+tbl_action 'ridhi','da'
+
+select *From emp 
+
+
+alter table employee add email varchar(100)
+alter table employee add pwd varchar(20)
+
+
+alter proc insert_email
+(@action char(1),
+@email varchar(100),
+@pwd varchar(20),
+@name varchar(20))
+as
+begin
+
+
+	if @action='n'  and NOT EXISTS (SELECT name,EMAIL FROM employee where email=@email ) and len(@pwd) between 8 and 12
+	begin
+			INSERT INTO EMPLOYEE (name,email) VALUES (@name,@email)
+
+	END
+	else if @action='u' and len(@pwd) between 8 and 12
+	begin
+
+		update employee set email=@email where name=@name
+
+	end
+	else
+	begin
+			
+			select 'password lenght must be between 8 to 12'
+
+	end
+		
+
+
+
+end
+
+
+exec insert_email @action='n',@email='443333@gmail.com',@pwd='abc',@name='raj'
+
+select * from employee
